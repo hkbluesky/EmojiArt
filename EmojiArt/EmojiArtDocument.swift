@@ -11,7 +11,15 @@ class EmojiArtDocument: ObservableObject {
     
     static let palette: String = "😃⚽️🏌🏽‍♂️🏀🏇🏿🎹"
     
-    @Published private var emojiArt: EmojiArt = EmojiArt()
+    // @Published // workaround for peroperty observer problem with property wrappers
+    private var emojiArt: EmojiArt = EmojiArt() {
+        willset {
+            objectWillchange.send()
+        }
+        didSet {
+            print("json = \(emojiArt.json?.utf8 ?? "nil")")
+        }
+    }
     
     @Published private(set) var backgroundImage: UIImage?
     
