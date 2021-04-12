@@ -24,8 +24,6 @@ struct EmojiArt: Codable {
             self.y = y
             self.size = size
             self.id = id
-
-            
         }
 
     }
@@ -33,6 +31,16 @@ struct EmojiArt: Codable {
     var json: Data? {
         return try? JSONEncoder().encode(self)
     }
+    
+    init?(json: Data?) {
+        if json != nil, let newEmojiArt = try? JSONDecoder().decode(EmojiArt.self, from: json!) {
+            self = newEmojiArt
+        } else {
+            return nil
+        }
+    }
+    
+    init() {}
     
     private var uniqueEmojiId = 0
     

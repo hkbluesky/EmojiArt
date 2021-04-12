@@ -12,12 +12,19 @@ class EmojiArtDocument: ObservableObject {
     static let palette: String = "😃⚽️🏌🏽‍♂️🏀🏇🏿🎹"
     
     // @Published // workaround for peroperty observer problem with property wrappers
+    
+    
+    //@Published private var emojiArt: EmojiArt = EmojiArt()
+    
     private var emojiArt: EmojiArt = EmojiArt() {
-        willset {
-            objectWillchange.send()
+        willSet {
+            objectWillChange.send()
         }
         didSet {
-            print("json = \(emojiArt.json?.utf8 ?? "nil")")
+            //UserDefaults.standard.set(EmojiArt.json, forKey: EmojiArtDocument.Untitled)
+            //print("json = \(emojiArt.json?.utf8 ?? "nil")")
+            //print("json = \(emojiArt.json?.utf8 ?? "nil")")
+            UserDefaults.standard.set(emojiArt.json, forKey: "EmojiArtDocument.untitled")
         }
     }
     
