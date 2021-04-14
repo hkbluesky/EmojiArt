@@ -60,10 +60,23 @@ class EmojiArtDocument: ObservableObject {
         }
     }
     
+    
+    var backgroundURL: URL? {
+        get {
+            emojiArt.backgroundURL
+        }
+        set {
+            emojiArt.backgroundURL = newValue?.imageURL
+            fetchBackgroundImageData()
+        }
+    }
+
+    /*
     func setBackgroundURL(_ url: URL?) {
         emojiArt.backgroundURL = url?.imageURL
         fetchBackgroundImageData()
     }
+    */
     
     private func fetchBackgroundImageData() {
         backgroundImage = nil
