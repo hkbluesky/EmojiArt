@@ -30,8 +30,9 @@ struct EmojiArtDocumentView: View {
                     )
                     
                       .gesture(self.doubleTapToZoom(in: geometry.size))
-                    if !self.isLoading {
-                        ForEach(self.document.emojis) { emoji in
+                    if self.isLoading {
+                        Image(systemName: "hourgalss").imageScale(.large).spinning()
+                    } else {ForEach(self.document.emojis) { emoji in
                             Text(emoji.text)
                                 .font(animatableWithSize: emoji.fontSize * self.zoomScale)
                                 .position(self.position(for: emoji, in: geometry.size))

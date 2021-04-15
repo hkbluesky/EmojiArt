@@ -6,16 +6,32 @@
 //
 
 import SwiftUI
+import Combine
 
 class EmojiArtDocument: ObservableObject {
     
     static let palette: String = "😃⚽️🏌🏽‍♂️🏀🏇🏿🎹"
     
+    @Published private var emojiArt: EmojiArt
+    
+    private static let untitled = "EmojiArtDocument.Untitled"
+
+    private var autosaveCancellable: AnyCancellable?
+    
+    init () {
+        emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: EmojiArtDocument.untitled)) ?? EmojiArt()
+        autosaveCancellable = $emojiArt.sink { emojiArt in
+            print("\(emojiArt.json?.utf8 ?? "nil")")
+            UserDefaults.standard.set(emojiArt.json, forKey: EmojiArtDocument.untitled)
+        }
+        fetchBackgroundImageData()
+    }
     // @Published // workaround for peroperty observer problem with property wrappers
     
     
     //@Published private var emojiArt: EmojiArt = EmojiArt()
     
+    /*
     private var emojiArt: EmojiArt = EmojiArt() {
         willSet {
             objectWillChange.send()
@@ -27,13 +43,15 @@ class EmojiArtDocument: ObservableObject {
             UserDefaults.standard.set(emojiArt.json, forKey: EmojiArtDocument.untitled)
         }
     }
-    
+   */
+    /*
     private static let untitled = "EmojiArtDocument.Utitled"
     
     init() {
         emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: EmojiArtDocument.untitled)) ?? EmojiArt()
         fetchBackgroundImageData()
     }
+ */
     
     @Published private(set) var backgroundImage: UIImage?
     
