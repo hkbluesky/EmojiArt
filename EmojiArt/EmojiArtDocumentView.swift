@@ -11,6 +11,8 @@ struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     var body: some View {
         VStack {
+            HStack {
+                PaletteChooser()
         ScrollView(.horizontal){
             HStack {
             ForEach(EmojiArtDocument.palette.map {String($0)}, id: \.self) {emoji in
@@ -20,7 +22,8 @@ struct EmojiArtDocumentView: View {
             }
             }
         }
-        .padding(.horizontal)
+            .layoutPriority(1)
+        }
             GeometryReader { geometry in
                 ZStack{
                 Color.white.overlay(
